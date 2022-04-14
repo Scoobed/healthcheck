@@ -90,3 +90,7 @@ See the [GoDoc examples](https://godoc.org/github.com/heptiolabs/healthcheck) fo
   - **`/ready`**: readiness endpoint (HTTP 200 if healthy, HTTP 503 if unhealthy)
 
 Pass the `?full=1` query parameter to see the full check results as JSON. These are omitted by default for performance.
+
+## Derivate work
+
+Local changes by Leif Terje Fonnes. Mostly adaptions to make it work with go 1.18
