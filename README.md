@@ -94,3 +94,5 @@ Pass the `?full=1` query parameter to see the full check results as JSON. These 
 ## Derivate work
 
 Local changes by Leif Terje Fonnes. Mostly adaptions to make it work with go 1.18
+
+Forked from Leif Terje Fonnes. Additional Changes by Scoobed and  Updated all dependencies for go 1.21, vendor libraries and fixed issues with Prometheus Client due to depreciation and Other metrics.  

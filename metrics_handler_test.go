@@ -23,6 +23,7 @@ import (
 	"testing"
 
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -42,7 +43,7 @@ func TestNewMetricsHandler(t *testing.T) {
 		})
 	}
 
-	metricsHandler := prometheus.Handler()
+	metricsHandler := promhttp.Handler()
 	req, err := http.NewRequest("GET", "/metrics", nil)
 	if err != nil {
 		t.Fatal(err)

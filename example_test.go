@@ -61,8 +61,8 @@ func Example() {
 
 func Example_database() {
 	// Connect to a database/sql database
-	var database *sql.DB
-	database = connectToDatabase()
+	//var database *sql.DB
+	var database *sql.DB = connectToDatabase()
 
 	// Create a Handler that we can use to register liveness and readiness checks.
 	health := NewHandler()
@@ -173,7 +173,7 @@ func Example_metrics() {
 
 	// Output:
 	// HTTP/1.1 200 OK
-	// Content-Length: 245
+	// Connection: close
 	// Content-Type: text/plain; version=0.0.4; charset=utf-8
 	//
 	// # HELP example_healthcheck_status Current check status (0 indicates success, 1 indicates failure)

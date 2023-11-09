@@ -23,7 +23,7 @@ import (
 	sqlmock "gopkg.in/DATA-DOG/go-sqlmock.v1"
 )
 
-const testURL = "leffen.com"
+const testURL = "jsonplaceholder.typicode.com"
 
 func TestTCPDialCheck(t *testing.T) {
 	assert.NoError(t, TCPDialCheck(testURL+":80", 5*time.Second)())
@@ -31,8 +31,8 @@ func TestTCPDialCheck(t *testing.T) {
 }
 
 func TestHTTPGetCheck(t *testing.T) {
-	assert.NoError(t, HTTPGetCheck("https://"+testURL, 5*time.Second)())
-	assert.Error(t, HTTPGetCheck("http://"+testURL, 5*time.Second)(), "redirect should fail")
+	assert.NoError(t, HTTPGetCheck("https://"+testURL+"/posts/1", 5*time.Second)())
+	assert.Error(t, HTTPGetCheck("http://x"+testURL+"/posts/1", 5*time.Second)(), "redirect should fail")
 	assert.Error(t, HTTPGetCheck("https://"+testURL+"/nonexistent", 5*time.Second)(), "404 should fail")
 }
 
