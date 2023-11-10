@@ -60,6 +60,40 @@ func HTTPGetCheck(url string, timeout time.Duration) Check {
 	}
 }
 
+// HTTPGetCheck returns a Check that performs an HTTP GET request against the
+// specified URL. The check fails if the response times out or returns a non-200
+// status code.
+func HTTPGetCheckExtended(url string, timeout time.Duration, statusCodes []int) Check {
+	client := http.Client{
+		Timeout: timeout,
+		// never follow redirects
+		CheckRedirect: func(*http.Request, []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
+	}
+	return func() error {
+		resp, err := client.Get(url)
+		if err != nil {
+			return err
+		}
+		resp.Body.Close()
+
+		// Check if the value is not in the slice
+		inSlice := false
+		for _, code := range statusCodes {
+			if code == resp.StatusCode {
+				inSlice = true
+				break
+			}
+		}
+
+		if !inSlice {
+			return fmt.Errorf("returned status %d", resp.StatusCode)
+		}
+		return nil
+	}
+}
+
 // DatabasePingCheck returns a Check that validates connectivity to a
 // database/sql.DB using Ping().
 func DatabasePingCheck(database *sql.DB, timeout time.Duration) Check {

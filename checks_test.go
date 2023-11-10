@@ -35,6 +35,13 @@ func TestHTTPGetCheck(t *testing.T) {
 	assert.Error(t, HTTPGetCheck("http://x"+testURL+"/posts/1", 5*time.Second)(), "redirect should fail")
 	assert.Error(t, HTTPGetCheck("https://"+testURL+"/nonexistent", 5*time.Second)(), "404 should fail")
 }
+func TestHTTPGetCheckExtended(t *testing.T) {
+
+	assert.NoError(t, HTTPGetCheckExtended("https://"+testURL+"/posts/1", 5*time.Second, []int{200, 201, 301, 437, 502})())
+	assert.Error(t, HTTPGetCheckExtended("http://x"+testURL+"/posts/1", 5*time.Second, []int{200, 201, 301, 437, 502})(), "redirect should fail")
+	assert.Error(t, HTTPGetCheckExtended("https://"+testURL+"/nonexistent", 5*time.Second, []int{200, 201, 301, 437, 502})(), "404 should fail")
+	assert.Error(t, HTTPGetCheckExtended("https://"+testURL+"/posts/1", 5*time.Second, []int{201, 301, 437, 502})(), "200 not in list should fail")
+}
 
 func TestDatabasePingCheck(t *testing.T) {
 	assert.Error(t, DatabasePingCheck(nil, 1*time.Second)(), "nil DB should fail")
